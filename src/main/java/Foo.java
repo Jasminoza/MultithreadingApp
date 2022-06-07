@@ -1,7 +1,4 @@
 public class Foo {
-    public MyThread a;
-    public MyThread b;
-    public MyThread c;
 
     public static void first(Runnable r) {
         System.out.print("first");
@@ -16,9 +13,9 @@ public class Foo {
     }
 
     Foo() throws InterruptedException {
-        a = new MyThread("A");
-        b = new MyThread("B");
-        c = new MyThread("C");
+        MyThread a = new MyThread("A");
+        MyThread b = new MyThread("B");
+        MyThread c = new MyThread("C");
         a.start();
         a.join();
         b.start();
