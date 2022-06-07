@@ -1,8 +1,8 @@
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Foo {
-    AtomicBoolean firstFunctionDone = new AtomicBoolean(false);
-    AtomicBoolean secondFunctionDone = new AtomicBoolean(false);
+    public static AtomicBoolean firstFunctionDone = new AtomicBoolean(false);
+    public static AtomicBoolean secondFunctionDone = new AtomicBoolean(false);
 
     public void first(Runnable r) {
         System.out.print("first");
