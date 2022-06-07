@@ -2,6 +2,7 @@ package Foo;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Semaphore;
 
 public class BarDemo {
     public static void main(String[] args) {
@@ -14,6 +15,9 @@ public class BarDemo {
         new MyThread2(cb, "X").start();
         new MyThread2(cb, "Y").start();
         new MyThread2(cb, "Z").start();
+
+
+        
     }
 }
 
