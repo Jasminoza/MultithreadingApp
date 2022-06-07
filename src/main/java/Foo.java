@@ -1,39 +1,35 @@
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class Foo {
+    AtomicBoolean firstFunctionDone = new AtomicBoolean(false);
+    AtomicBoolean secondFunctionDone = new AtomicBoolean(false);
 
-    public static void first(Runnable r) {
+    public void first(Runnable r) {
         System.out.print("first");
+        firstFunctionDone.set(true);
     }
 
-    public static void second(Runnable r) {
+    public void second(Runnable r) {
+        while (!firstFunctionDone.get()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         System.out.print("second");
+        secondFunctionDone.set(true);
     }
 
-    public static void third(Runnable r) {
+    public void third(Runnable r) {
+        while (!firstFunctionDone.get() && !secondFunctionDone.get()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         System.out.print("third");
     }
-
-    Foo() throws InterruptedException {
-        MyThread a = new MyThread("A");
-        MyThread b = new MyThread("B");
-        MyThread c = new MyThread("C");
-        a.start();
-        a.join();
-        b.start();
-        b.join();
-        c.start();
-        c.join();
-    }
 }
 
-class MyThread extends Thread {
-    MyThread(String name) {
-        super(name);
-    }
-
-    @Override
-    public void run() {
-        if (currentThread().getName().equals("A")) Foo.first(this);
-        if (currentThread().getName().equals("B")) Foo.second(this);
-        if (currentThread().getName().equals("C")) Foo.third(this);
-    }
-}
